@@ -6,7 +6,7 @@ import App from "./App";
 // inject global axios instance as http client to Model
 
 Vue.config.productionTip = false;
-
+Vue.config.formApiUrl = process.env.FORM_API_URL;
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

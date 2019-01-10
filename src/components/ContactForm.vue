@@ -12,6 +12,10 @@
       v-if="!isSubmitted"
       @submit.prevent="submit"
     >
+    <!--   
+    @submit="checkForm"
+      novalidate="true"
+    -->
       <div class="fields">
         <div class="field third">
           <input type="text" placeholder="Név" v-model.lazy.trim="form.name" />
@@ -37,7 +41,13 @@
             v-model.lazy.trim="form.message"
           ></textarea>
         </div>
-      </div>
+      </div>  
+      <p v-if="errors2.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors2">{{ error }}</li>
+        </ul>
+      </p>
       <div class="alert alert-danger" v-if="isError">
         <p class="mb-0">
           <strong>{{ errorHeader }}</strong>
@@ -53,6 +63,13 @@
         </ul>
       </div>
       <div id="response-msg">{{ info }}</div>
+      <vue-recaptcha
+        ref="invisibleRecaptcha"
+        @verify="onVerify"
+        @expired="onExpired"
+        size="invisible"
+        :sitekey="sitekey">
+      </vue-recaptcha>
       <ul class="actions">
         <li>
           <input
@@ -86,16 +103,18 @@
 </template>
 <script>
 import axios from "axios";
+import VueRecaptcha from 'vue-recaptcha';
 
 export default {
   name: "contact-form",
-
+  components: { VueRecaptcha },
   data() {
     return {
       isSubmitted: false,
       submitting: false,
-      isError: true,
+      isError: false,
       errors: [],
+      errors2: [],
       form: {
         name: "",
         email: "",
@@ -103,7 +122,7 @@ export default {
         message: "",
         submitted: "The form is submitted!",
         sentInfo: "Here is the info you sent:",
-        return: "Return to the form"
+        return: "Return to the form",
       },
       info: "",
       error: {
@@ -112,24 +131,71 @@ export default {
         generalMessage:
           "Form sending failed due to technical problems. Try again later."
       },
-      errorHeader: "error.invalidFields"
+      errorHeader: "We have a problem...",
+      sitekey: '6LcksYgUAAAAAN9-iUVD44Qil5pxhJkbeT8hFnQH',
+      status: "",
+      sucessfulServerResponse: "",
+      serverError: ""
     };
   },
 
   mounted() {},
 
   methods: {
+    //Google re-captcha methods
+    onSubmit: function () {
+      this.$refs.invisibleRecaptcha.execute()
+    },
+    onVerify: function (response) {
+      console.log('Verify: ' + response)
+    },
+    onExpired: function () {
+      console.log('Expired')
+    },
+    resetRecaptcha () {
+      this.$refs.recaptcha.reset() // Direct call reset method
+    },
+    checkForm: function(event) {
+      this.errors2 = [];
+
+      if (!this.form.name) {
+        this.errors2.push("Name required");
+      }
+
+      if (!this.form.email) {
+        this.errors2.push("Email required");
+      } else if (!this.validEmail(this.form.email)) {
+        this.errors2.push("Valid email required");
+      }
+
+      if(!this.form.message) {
+        this.errors2.push("Message box is empty");
+      }
+
+      if (!this.errors2.length) {
+        
+        return true;
+      }
+
+      event.preventDefault();
+    },
+    validEmail: function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     reload: function() {
-      //window.location = "";
+      //window.location = ""; or // reset the variables manually
       this.submitting = false;
       this.isSubmitted = false;
       this.isError = false;
     },
     submit: function() {
+      this.checkForm();
+      this.onSubmit();
       this.submitting = true;
 
       axios
-        .post("https://www.mocky.io/v2/5adb5a8c2900002b003e3df1", this.form)
+        .post("https://www.mocky.io/v2/5ade0bf2300000272b4b29b9", this.form)
         .then(response => {
           //this.info = response; // display it in the page right now
           console.log("here we are posting" + this.form);

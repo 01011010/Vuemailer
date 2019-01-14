@@ -3,10 +3,26 @@
 import Vue from "vue";
 import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCoffee, faLaptop } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoffee,
+  faLaptop,
+  faSatelliteDish,
+  faUsers,
+  faCogs,
+  faCode,
+  faNewspaper
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCoffee, faLaptop);
+library.add(
+  faCoffee,
+  faLaptop,
+  faSatelliteDish,
+  faUsers,
+  faCogs,
+  faCode,
+  faNewspaper
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 // inject global axios instance as http client to Model

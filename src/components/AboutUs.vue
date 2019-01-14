@@ -1,6 +1,6 @@
 <template>
   <!-- Section -->
-  <section id="first">
+  <section>
     <header><h2>Rólunk</h2></header>
     <div class="content">
       <p>

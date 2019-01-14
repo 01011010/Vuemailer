@@ -17,7 +17,10 @@
         vívott "harcban", ránk mindig számíthat.
       </p>
       <ul class="feature-icons">
-        <li class="icon fa-laptop">Mobil, tablet és kiosk alkalmazások</li>
+        <li class="icon fa-laptop">
+          <font-awesome-icon :icon="['fas', 'laptop']" class="" />Mobil, tablet
+          és kiosk alkalmazások
+        </li>
         <li class="icon fa-bolt">Online bankkártyás fizetés, előfizetés</li>
         <li class="icon fa-signal">
           Ügyfélkapcsolati rendszerek, email kampányok

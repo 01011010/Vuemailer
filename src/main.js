@@ -2,7 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCoffee, faLaptop } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+library.add(faCoffee, faLaptop);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 // inject global axios instance as http client to Model
 
 Vue.config.productionTip = false;
@@ -13,5 +19,4 @@ new Vue({
   components: { App },
   template: "<App/>"
 });
-
 import("@/assets/css/main.css");

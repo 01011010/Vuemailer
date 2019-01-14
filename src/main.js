@@ -13,3 +13,5 @@ new Vue({
   components: { App },
   template: "<App/>"
 });
+
+import("@/assets/css/main.css");

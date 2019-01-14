@@ -1,105 +1,128 @@
 <template>
-  <div>
-    <p>
-      <!--
-        <strong>Kérjük, töltse ki</strong> az űrlapot és mi 24 órán belül
-        felvesszük Önnel a kapcsolatot!
-      -->
-    </p>
-    <form
+  <section>
+	  <header>
+		  <h2>Kapcsolat</h2>
+		</header>
+		<div class="content">
+			<p><strong>Kérjük, töltse ki</strong> az űrlapot és mi 24 órán belül felvesszük Önnel a kapcsolatot!</p>
+      <form
       id="contact"
       method="POST"
       v-if="!isSubmitted"
       @submit.prevent="submit"
-    >
-    <!--   
-    @submit="checkForm"
-      novalidate="true"
-    -->
-      <div class="fields">
-        <div class="field third">
-          <input type="text" placeholder="Név" v-model.lazy.trim="form.name" />
-        </div>
-        <div class="field third">
-          <input
-            type="email"
-            placeholder="Email"
-            v-model.lazy.trim="form.email"
-          />
-        </div>
-        <div class="field third">
-          <input
-            type="tel"
-            placeholder="Telefon"
-            v-model.lazy.trim="form.tel"
-          />
-        </div>
-        <div class="field">
-          <textarea
-            placeholder="Üzenet"
-            rows="7"
-            v-model.lazy.trim="form.message"
-          ></textarea>
-        </div>
-      </div>  
-      <p v-if="errors2.length">
-        <b>Please correct the following error(s):</b>
-        <ul>
-          <li v-for="error in errors2">{{ error }}</li>
-        </ul>
-      </p>
-      <div class="alert alert-danger" v-if="isError">
-        <p class="mb-0">
-          <strong>{{ errorHeader }}</strong>
+      >
+        <!--   
+        @submit="checkForm"
+          novalidate="true"
+        -->
+        <div class="fields">
+          <div class="field third">
+            <input type="text" placeholder="Név" v-model.lazy.trim="form.name" />
+          </div>
+          <div class="field third">
+            <input
+              type="email"
+              placeholder="Email"
+              v-model.lazy.trim="form.email"
+            />
+          </div>
+          <div class="field third">
+            <input
+              type="tel"
+              placeholder="Telefon"
+              v-model.lazy.trim="form.tel"
+            />
+          </div>
+          <div class="field">
+            <textarea
+              placeholder="Üzenet"
+              rows="7"
+              v-model.lazy.trim="form.message"
+            ></textarea>
+          </div>
+        </div>  
+        <p v-if="errors2.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors2">{{ error }}</li>
+          </ul>
         </p>
-        <ul v-if="errors.length > 0">
-          <li v-for="error in errors" v-bind:key="error.field">
-            <span v-if="error.field"
-              >{{ error.field }}
-              <span v-if="error.message">: {{ error.message }}</span>
-            </span>
-            <span v-else-if="error.message">{{ error.message }}</span>
+        <div class="alert alert-danger" v-if="isError">
+          <p class="mb-0">
+            <strong>{{ errorHeader }}</strong>
+          </p>
+          <ul v-if="errors.length > 0">
+            <li v-for="error in errors" v-bind:key="error.field">
+              <span v-if="error.field"
+                >{{ error.field }}
+                <span v-if="error.message">: {{ error.message }}</span>
+              </span>
+              <span v-else-if="error.message">{{ error.message }}</span>
+            </li>
+          </ul>
+        </div>
+        <div id="response-msg">{{ info }}</div>
+        <vue-recaptcha
+          ref="invisibleRecaptcha"
+          @verify="onVerify"
+          @expired="onExpired"
+          size="invisible"
+          :sitekey="sitekey">
+        </vue-recaptcha>
+        <ul class="actions">
+          <li>
+            <input
+              type="submit"
+              value="Küldés"
+              class="button primary"
+              :disabled="submitting"
+            />
           </li>
         </ul>
+      </form>
+      <div v-else>
+        <div class="alert alert-success">
+          <strong>{{ form.submitted }}</strong>
+        </div>
+        <div class="alert alert-info">
+          <p>
+            <strong>{{ form.sentInfo }}</strong>
+          </p>
+          <pre>
+             {{form}}
+          </pre>
+        </div>
+        <p class="text-center">
+          <a href="#" class="btn btn-secondary" @click.prevent="reload();">{{
+          form.return
+          }}</a>
+        </p>
       </div>
-      <div id="response-msg">{{ info }}</div>
-      <vue-recaptcha
-        ref="invisibleRecaptcha"
-        @verify="onVerify"
-        @expired="onExpired"
-        size="invisible"
-        :sitekey="sitekey">
-      </vue-recaptcha>
-      <ul class="actions">
+    </div>
+    <footer>
+      <ul class="items">
         <li>
-          <input
-            type="submit"
-            value="Küldés"
-            class="button primary"
-            :disabled="submitting"
-          />
+          <h3>E-mail</h3>
+          <a href="#">information@untitled.ext</a>
+        </li>
+        <li>
+          <h3>Telefon</h3>
+          <a href="#">(000) 000-0000</a>
+        </li>
+        <li>
+          <h3>Cím</h3>
+          <span>1234 Somewhere Road, Nashville, TN 00000</span>
+        </li>
+        <li>
+          <ul class="icons">
+            <li><a href="#" class="icon fa-skype"><span class="label">Skype</span></a></li>
+            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+          </ul>
         </li>
       </ul>
-    </form>
-    <div v-else>
-      <div class="alert alert-success">
-        <strong>{{ form.submitted }}</strong>
-      </div>
-      <div class="alert alert-info">
-        <p>
-          <strong>{{ form.sentInfo }}</strong>
-        </p>
-        <pre>
-            {{form}}
-        </pre>
-      </div>
-      <p class="text-center">
-        <a href="#" class="btn btn-secondary" @click.prevent="reload();">{{
-          form.return
-        }}</a>
-      </p>
-    </div>
-  </div>
+    </footer>
+  </section>
 </template>
 <script>
 import axios from "axios";
@@ -139,7 +162,9 @@ export default {
     };
   },
 
-  mounted() {},
+  mounted() {
+    
+  },
 
   methods: {
     //Google re-captcha methods
@@ -184,7 +209,8 @@ export default {
       return re.test(email);
     },
     reload: function() {
-      //window.location = ""; or // reset the variables manually
+      // window.location = ""; // or reset the variables manually
+      this.resetForm();
       this.submitting = false;
       this.isSubmitted = false;
       this.isError = false;
@@ -195,7 +221,7 @@ export default {
       this.submitting = true;
 
       axios
-        .post("https://www.mocky.io/v2/5ade0bf2300000272b4b29b9", this.form)
+        .post("https://www.mocky.io/v2/5adb5a8c2900002b003e3df1", this.form)
         .then(response => {
           //this.info = response; // display it in the page right now
           console.log("here we are posting" + this.form);
@@ -215,6 +241,7 @@ export default {
         console.log("submit cusscess response has data coming back");
         this.isSubmitted = true;
         this.isError = false;
+        this.resetRecaptcha();
       } else {
         this.errors = response.data.errors;
         this.isError = true;
@@ -225,6 +252,15 @@ export default {
       this.errorHeader = this.error.general;
       this.errors = [{ field: null, message: this.error.generalMessage }];
       this.isError = true;
+    },
+    resetForm: function() {
+      console.log('Reseting the form')
+      var self = this; //you need this because *this* will refer to Object.keys below`
+
+      //Iterate through each object field, key is name of the object field`
+      Object.keys(this.form).forEach(function(key,index) {
+        self.form[key] = '';
+      });
     }
   },
   watch: {

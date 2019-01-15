@@ -29,6 +29,7 @@ library.add(
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueAnalytics, {
   id: "UA-XXX-X"
+  //disabled: true // disable google analytics tracking by default
 });
 // inject global axios instance as http client to Model
 

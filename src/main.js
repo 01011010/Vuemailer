@@ -2,6 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
+import VueAnalytics from "vue-analytics";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCoffee,
@@ -25,6 +27,9 @@ library.add(
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.use(VueAnalytics, {
+  id: "UA-XXX-X"
+});
 // inject global axios instance as http client to Model
 
 Vue.config.productionTip = false;

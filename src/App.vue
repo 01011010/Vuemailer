@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-server-rendered="true">
     <div id="wrapper">
       <Intro /><ContactForm /><AboutUs /><Services /><References /><Copyright />
     </div>
@@ -46,6 +46,11 @@ export default {
   },
   mounted() {
     setTimeout(() => document.body.classList.remove("is-preload"), 100);
+  },
+  methods: {
+    track() {
+      this.$ga.page("/");
+    }
   }
 };
 </script>

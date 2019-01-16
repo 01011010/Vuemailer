@@ -5,7 +5,7 @@
       <h1>Elevator</h1>
       <p>
         Egyedi webes és mobil alkalmazásfejlesztés, hosting, karbantartás és
-        tanácsadás. <a href="https://twitter.com/">@anonim</a>
+        tanácsadás.
       </p>
       <ul class="actions">
         <li>

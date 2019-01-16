@@ -92,7 +92,6 @@ export default {
       //from now on you will start tracking
     },
     persist() {
-      console.log(this.isAnalyticsTrack);
       localStorage.setItem("gAnalytics", this.isAnalyticsTrack);
       if (this.isAnalyticsTrack) {
         this.enableTracking();
@@ -106,7 +105,6 @@ export default {
     leave: function() {},
     toggleSaveSetting() {
       setTimeout(() => {
-        console.log("Timeout");
         this.saveSettings = false;
       }, 300);
     }

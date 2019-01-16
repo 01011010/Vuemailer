@@ -4,13 +4,14 @@
 		  <h2>Kapcsolat</h2>
 		</header>
 		<div class="content">
-			<p><strong>Kérjük, töltse ki</strong> az űrlapot és mi 24 órán belül felvesszük Önnel a kapcsolatot!</p>
+			
       <form
       id="contact"
       method="POST"
       v-if="!isSubmitted"
       @submit.prevent="submit"
       >
+        <p><strong>Kérjük, töltse ki</strong> az űrlapot és mi 24 órán belül felvesszük Önnel a kapcsolatot!</p>
         <!--   
         @submit="checkForm"
           novalidate="true"
@@ -103,21 +104,24 @@
       <ul class="items">
         <li>
           <h3>E-mail</h3>
-          <a href="#">information@untitled.ext</a>
+          <a href="#">{{ company.email }}</a>
         </li>
         <li>
           <h3>Telefon</h3>
-          <a href="#">(000) 000-0000</a>
+          <a href="#">{{ company.phone }}</a>
         </li>
         <li>
           <h3>Cím</h3>
-          <span>1234 Somewhere Road, Nashville, TN 00000</span>
+          <span>{{ company.address }}</span>
         </li>
         <li>
           <ul class="icons">
-            <li><a href="#"><span class="label">Skype</span></a></li>
-            <li><a href="#"><span class="label">Twitter</span></a></li>
-            <li><a href="#"><span class="label">Facebook</span></a></li>
+            <li>
+              <a href="#"><span class="label">
+                <font-awesome-icon :icon="['fab', 'skype']" class="" />
+                </span>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -133,6 +137,11 @@ export default {
   components: { VueRecaptcha },
   data() {
     return {
+      company: {
+        email: 'abc@abc.com',
+        phone: '(000) 000-0000',
+        address: '1234 Somewhere Road, Nashville, TN 00000'
+      },
       isSubmitted: false,
       submitting: false,
       isError: false,

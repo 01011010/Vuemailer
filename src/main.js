@@ -14,6 +14,7 @@ import {
   faCode,
   faNewspaper
 } from "@fortawesome/free-solid-svg-icons";
+import { faSkype } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(
@@ -23,7 +24,8 @@ library.add(
   faUsers,
   faCogs,
   faCode,
-  faNewspaper
+  faNewspaper,
+  faSkype
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
